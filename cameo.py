@@ -1,8 +1,8 @@
 import cv2
 import datetime
-from opencv_learning.managers import WindowManager, CaptureManager
+from managers import WindowManager, CaptureManager
 #
-import opencv_learning.filters as filters
+import filters as filters
 
 
 class Cameo(object):

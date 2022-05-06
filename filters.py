@@ -1,6 +1,6 @@
 import cv2
 import numpy
-import opencv_learning.utils
+import utils
 
 def strokeEdges(src, dst, blurKsize = 7, edgeKsize = 5):
     if blurKsize >= 3:
