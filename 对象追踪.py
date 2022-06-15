@@ -2,18 +2,10 @@ import cv2
 import numpy as np
 
 
-def video_mirror_output(video):
-    new_img = np.zeros_like(video)
-    h, w = video.shape[0], video.shape[1]
-    for row in range(h):
-        for i in range(w):
-            new_img[row, i] = video[row, w - i - 1]
-    return new_img
-
-
 cam = cv2.VideoCapture(0)  # 调用摄像头
 Obj_low = np.array([0, 0, 0])
-Obj_high = np.array([179, 157, 79])
+# Obj_high = np.array([180, 255, 46])
+Obj_high = np.array([180, 157, 40])
 while True:
     # 镜像
     ret, frame = cam.read()
@@ -27,6 +19,7 @@ while True:
     MASK1 = cv2.inRange(HSV, Obj_low, Obj_high)  # 二值化，中间阈值为255，其余为0
     MASK1 = cv2.erode(MASK1, None, iterations=2)
     MASK1 = cv2.dilate(MASK1, None, iterations=2)
+    cv2.imshow('m', MASK1)
     contours, hierarchy = cv2.findContours(MASK1.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     center = None
     if len(contours) > 0:
@@ -38,6 +31,7 @@ while True:
         if radius > 10:
             cv2.circle(img, center, 5, (0, 0, 255), -1)
             cv2.circle(img, center, int(radius), (0, 0, 255), 2)
+    # cv2.imshow('Gs', blur_img)
     cv2.imshow("my window", img)
     k = cv2.waitKey(1)
     if k == 27:

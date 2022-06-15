@@ -1,27 +1,17 @@
 import cv2
-import numpy as np
+import imutils
+import easyocr
 
-kernel1 = np.array([[1, 1, 1],
-                   [0, 0, 0],
-                   [-1, -1, -1]]) * 2
-kernel2 = np.array([[1/4, 1/4],
-                   [1/4, 1/4]])
-kernel3 = np.array([[-1, 0, 1],
-                   [-1, 0, 1],
-                   [-1, 0, 1]]) * 2
+# 预处理
+img = cv2.imread('picture/A4.PNG')
+# print(img.shape)
+img = imutils.resize(img, width=512)
+# print(img.shape)
+img_g = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-
-o = cv2.imread("picture/lena.jpg")
-
-r1 = cv2.filter2D(o, -1, kernel1)
-r2 = cv2.filter2D(o, -1, kernel3)
-r3 = r1 + r2
-r3 = cv2.cvtColor(r3, cv2.COLOR_BGR2GRAY)
-
-cv2.imshow("original", o)
-cv2.imshow("result1", r1)
-cv2.imshow("result2", r2)
-cv2.imshow("result3", r3)
+# 边缘检测
+img_cn = cv2.bilateralFilter(img_g, 10, 50, 50)  # 双边滤波
+img_cn = cv2.Canny(img_cn, 100, 200)
+cv2.imshow('cna', img_cn)
 cv2.waitKey()
 cv2.destroyAllWindows()
-
