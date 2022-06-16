@@ -4,7 +4,7 @@ import numpy as np
 img_path = "images/12t.jpg"
 img = cv2.imread(img_path, 0)
 
-# 去躁:双边滤波
+# 去躁:使用双边滤波进行降噪
 img_f = cv2.bilateralFilter(img, 25, 100, 100)
 # 二值化
 # t, img_t = cv2.threshold(img_f, 127, 255, cv2.THRESH_BINARY)
